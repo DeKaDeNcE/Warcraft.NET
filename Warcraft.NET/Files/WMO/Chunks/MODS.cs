@@ -5,30 +5,30 @@ using Warcraft.NET.Files.WMO.Entries;
 
 namespace Warcraft.NET.Files.WMO.Chunks
 {
-    public class MODD : IIFFChunk, IBinarySerializable
+    public class MODS : IIFFChunk, IBinarySerializable
     {
         /// <summary>
         /// Holds the binary chunk signature.
         /// </summary>
-        public const string Signature = "MODD";
+        public const string Signature = "MODS";
 
         /// <summary>
-        /// Gets or sets <see cref="MODDEntry"s />
+        /// Gets or sets <see cref="MODSEntry"s />
         /// </summary>
-        public List<MODDEntry> MODDEntries { get; set; } = new List<MODDEntry>();
+        public List<MODSEntry> MODSEntries { get; set; } = new List<MODSEntry>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MODD"/> class.
+        /// Initializes a new instance of the <see cref="MODS"/> class.
         /// </summary>
-        public MODD()
+        public MODS()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MODD"/> class.
+        /// Initializes a new instance of the <see cref="MODS"/> class.
         /// </summary>
         /// <param name="inData">The binary data.</param>
-        public MODD(byte[] inData)
+        public MODS(byte[] inData)
         {
             LoadBinaryData(inData);
         }
@@ -51,9 +51,9 @@ namespace Warcraft.NET.Files.WMO.Chunks
             using (var ms = new MemoryStream(inData))
             using (var br = new BinaryReader(ms))
             {
-                var materialCount = br.BaseStream.Length / MODDEntry.GetSize();
+                var materialCount = br.BaseStream.Length / MODSEntry.GetSize();
                 for (var i = 0; i < materialCount; ++i)
-                    MODDEntries.Add(new MODDEntry(br.ReadBytes(MODDEntry.GetSize())));
+                    MODSEntries.Add(new MODSEntry(br.ReadBytes(MODSEntry.GetSize())));
             }
         }
 
@@ -63,7 +63,7 @@ namespace Warcraft.NET.Files.WMO.Chunks
             using (var ms = new MemoryStream())
             using (var bw = new BinaryWriter(ms))
             {
-                foreach (var material in MODDEntries)
+                foreach (var material in MODSEntries)
                     bw.Write(material.Serialize());
                 return ms.ToArray();
             }
